@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for My Love</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Countdown Section */
+        #countdown-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(60deg, violet, indigo, blue, green, yellow, orange, red);
+            animation: backgroundAnimation 10s infinite alternate;
+            color: white;
+            font-size: 2rem;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background-position: left;
+            }
+
+            100% {
+                background-position: right;
+            }
+        }
+
+        /* Night Sky Background */
+        #main-content {
+            display: none;
+            opacity: 0;
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(to bottom, #0b3d91, #010a43);
+            transition: opacity 2s ease-in-out;
+            overflow: hidden;
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 1.5s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Moon */
+        .moon {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 80px;
+            height: 80px;
+            background: #f5f3ce;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .moon-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            /* You can change this color to whatever you like */
+            text-align: center;
+        }
+
+        /* Heart Balloons */
+        #balloons-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 50px;
+            height: 50px;
+            background: red;
+            clip-path: path('M24 8C24 3 20 0 16 0C12 0 8 3 8 8C8 12 16 20 16 20C16 20 24 12 24 8Z');
+            animation: floatBalloon 4s linear infinite;
+        }
+
+        @keyframes floatBalloon {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Floating Hearts */
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: crimson;
+            font-size: 2rem;
+            animation: floatHearts 5s linear infinite;
+        }
+
+        @keyframes floatHearts {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Greeting Card */
+        #greeting-card {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 678px;
+            height: 420px;
+            background: white;
+            box-shadow: 0 0 15px crimson;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
+            animation: foldCard 0.5s forwards;
+            z-index: 100;
+        }
+
+        @media screen and (max-width: 768px) {
+            #greeting-card {
+                width: 360px;
+                height: 580px;
+            }
+        }
+
+        /* Folding Animation */
+        @keyframes foldCard {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .card-inner {
+            padding: 20px;
+            position: relative;
+        }
+
+        .card-inner p {
+            font-size: 16px;
+            line-height: 1.4;
+            color: #000;
+        }
+
+        /* Glow Effect */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 15px crimson;
+            }
+
+            100% {
+                box-shadow: 0 0 30px crimson;
+            }
+        }
+
+        #greeting-card h2 {
+            font-family: 'Dancing Script', cursive;
+            animation: heartbeat 1s infinite;
+            color: crimson;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #close-card {
+            margin-top: 10px;
+            cursor: pointer;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid red;
+        }
+
+        #close-card:hover {
+            background: white;
+            color: red;
+        }
+
+        /* Surprise Button */
+        #show-card-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            background: orangered;
+            border: 1px solid orangered;
+            color: #fff;
+            border-radius: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        #show-card-button:hover {
+            background-color: #fff;
+            color: orangered;
+        }
+
+        /* Balloons Container */
+        #balloons-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Floating Emoji */
+        .emoji {
+            position: absolute;
+            bottom: -50px;
+            font-size: 2rem;
+            animation: floatEmoji 4s linear infinite;
+        }
+
+        @keyframes floatEmoji {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Realistic Stars */
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.2;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .star:nth-child(even) {
+            animation-duration: 1.5s;
+        }
+
+        .star:nth-child(odd) {
+            animation-duration: 2.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Countdown Section -->
+    <div id="countdown-container">
+        <h1>Countdown to Your Special Day</h1>
+        <div id="countdown"></div>
+    </div>
+
+    <!-- Surprise Content -->
+    <div id="main-content">
+        <div class="moon">
+            <span class="moon-text">Anu</span>
+        </div>
+        <div class="floating-hearts"></div>
+        <div id="balloons-container"></div>
+
+        <button id="show-card-button">Kiss me</button>
+    </div>
+
+    <!-- Greeting Card -->
+    <div id="greeting-card">
+        <div class="card-inner">
+            <p>"A year ago, destiny played a game… But love had other plans. And today, I'm the luckiest guy because of
+                you."</p>
+            <p>From a 'Yes' to a 'No' and then a 'Forever Yes' - We have travelled through destiny’s twists and turns,
+                hand in hand. You are not just the love of my life, you are the miracle that turned my world into a
+                beautiful dream.</p>
+            <h2>Happy Birthday My Love! 🎉</h2>
+            <p>Today is special not just because you were born, but because you were born to be my soulmate. Every
+                moment with you is precious, and I promise to cherish, protect, and love you for a lifetime. You are my
+                greatest gift, and I can't wait to build a forever with you. Happy Birthday, my Queen! my Heart! my Baby! 
+                my Sweety! my Everything! nan Bangara 😊</p>
+            <button id="close-card">Kiss me to close</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to generate random stars
+        function generateStars() {
+            const numStars = 150;
+            const starContainer = document.getElementById("main-content");
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement("div");
+                star.classList.add("star");
+                const size = Math.random() * 3 + "px";  // Random size for stars
+                const positionX = Math.random() * window.innerWidth + "px"; // Random horizontal position
+                const positionY = Math.random() * window.innerHeight + "px"; // Random vertical position
+                star.style.width = size;
+                star.style.height = size;
+                star.style.left = positionX;
+                star.style.top = positionY;
+
+                starContainer.appendChild(star);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize stars when the page loads
+            generateStars();
+
+            let countDownDate = new Date("Mar 21, 2025 16:24:00").getTime();
+            let countdownElement = document.getElementById("countdown");
+            let countdownInterval = setInterval(function () {
+                let now = new Date().getTime();
+                let distance = countDownDate - now;
+                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById("countdown-container").style.display = "none";
+                    document.getElementById("main-content").style.display = "block";
+                    setTimeout(() => { document.getElementById("main-content").style.opacity = "1"; }, 100);
+                }
+            }, 1000);
+
+            document.getElementById("show-card-button").addEventListener("click", function () {
+                document.getElementById("greeting-card").style.display = "block";
+            });
+
+            document.getElementById("close-card").addEventListener("click", function () {
+                document.getElementById("greeting-card").style.display = "none";
+                clearInterval(balloonInterval);
+                document.getElementById("balloons-container").innerHTML = "";
+            });
+        });
+
+        let balloonInterval;
+
+        document.getElementById("show-card-button").addEventListener("click", function () {
+            let card = document.getElementById("greeting-card");
+            let balloonsContainer = document.getElementById("balloons-container");
+
+            // Show the greeting card
+            card.style.display = "block";
+
+            // Start generating 😘 emojis continuously
+            balloonInterval = setInterval(() => {
+                let emoji = document.createElement("div");
+                emoji.classList.add("emoji");
+                emoji.innerHTML = "😘"; // Emoji content
+
+                // Random position for emojis
+                emoji.style.left = Math.random() * window.innerWidth + "px";
+                emoji.style.animationDuration = (2 + Math.random() * 3) + "s"; // Random speed
+                balloonsContainer.appendChild(emoji);
+
+                // Remove emoji after animation
+                setTimeout(() => {
+                    emoji.remove();
+                }, 4000);
+            }, 500); // Emojis every 500ms
+        });
+    </script>
+</body>
+
+</html>
